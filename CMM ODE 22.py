@@ -14,7 +14,7 @@ P0 = 5.0                # W baseline power
 m_drone = 1.0           # kg (drone excluding battery)
 m_battery = 0.2         # kg
 C = 4.0                 # Ah
-V_nom = 11.1            # V
+V_nom = 22.2            # V
 E_battery = C * 3600 * V_nom   # J
 alpha = m_battery / E_battery  # kg/J
 
@@ -62,6 +62,7 @@ plt.tight_layout()
 plt.show()
 
 print(f"Estimated flight time until energy depletion: {t[-1]:.1f} seconds ({t[-1]/60:.1f} minutes)")
+
 
 
 
