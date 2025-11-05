@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
 # --- Constants ---
+#some constants changing by Roy 05/11 WED, Use MaxAmps Li-ion 10,000 mAh (6S2P / Li-ion pack)
+#10000mAh, 21.6V, 864g, assume mass of drone+payload = 2kg
 g = 9.81                # m/s^2
 rho = 1.225             # kg/m^3
 D = 0.10                # m (propeller diameter)
@@ -11,15 +13,15 @@ e = 0.75                # efficiency
 P0 = 5.0                # W baseline power
 
 # --- Drone & battery ---
-m_drone = 1.0           # kg (drone excluding battery)
-m_battery = 0.2         # kg
-C = 4.0                 # Ah
-V_nom = 11.1            # V
+m_drone = 2.0           # kg (drone excluding battery)
+m_battery = 0.864         # kg
+C = 10.0                 # Ah
+V_nom = 21.6            # V
 E_battery = C * 3600 * V_nom   # J
 alpha = m_battery / E_battery  # kg/J
 
 # --- Add safety parameters ---
-discharge_depth = 0.8   # Use only 80% of battery for safety
+discharge_depth = 0.9   # Use only 80% of battery for safety
 E_min = E_battery * (1 - discharge_depth)  # Minimum safe energy level
 
 k = (g**1.5) / (e * np.sqrt(2 * rho * A))
@@ -188,4 +190,5 @@ print(f"  - Thrust-to-power: {(m_drone*g)/avg_power:.3f} N/W")
 
 print(f"\n{'='*50}")
 print("SIMULATION COMPLETE")
+
 print(f"{'='*50}\n")
