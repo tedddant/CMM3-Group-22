@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
-
-## @author: teddant
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -27,8 +23,8 @@ def CP(D): return 0.018    # placeholder CP
 # Masses
 
 m_payload = 1.0   # kg
-m_frame   = 4.0   # kg
-m_batt    = 1.5   # kg
+m_frame   = 2.0   # kg
+m_batt    = 0.2   # kg
 m0 = m_frame + m_payload  # non-battery mass
 
 
@@ -70,7 +66,7 @@ def hover_power(D, n):
 
 # Sweep prop diameters and compute hover power
 
-D_vals = np.linspace(0.22, 0.45, 20)
+D_vals = np.linspace(0.22, 0.30, 20)
 P_vals = []
 
 print("\nD (m)\tHover RPM\tPower (W)")
