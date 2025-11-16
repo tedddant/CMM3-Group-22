@@ -3,14 +3,13 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
 # --- Constants ---
-#some constants changing by Roy 05/11 WED, Use MaxAmps Li-ion 10,000 mAh (6S2P / Li-ion pack)
-#10000mAh, 21.6V, 864g, assume mass of drone+payload = 2kg
+#Define Parameters and  Constants used in this case
 g = 9.81                # m/s^2
 rho = 1.225             # kg/m^3
 D = 0.10                # m (propeller diameter)
-A = np.pi * (D/2)**2    # m^2
-e = 0.75                # efficiency
-P0 = 5.0                # W baseline power
+A = np.pi * (D/2)**2    # m^2 (propeller disc area)
+e = 0.75                # battery efficiency
+P0 = 5.0                # W (baseline power)
 
 # --- Drone & battery ---
 m_drone = 2.0           # kg (drone excluding battery)
@@ -24,7 +23,7 @@ alpha = m_battery / E_battery  # kg/J
 discharge_depth = 0.9   # Use only 80% of battery for safety
 E_min = E_battery * (1 - discharge_depth)  # Minimum safe energy level
 
-k = (g**1.5) / (e * np.sqrt(2 * rho * A))
+k = (g**1.5) / (e * np.sqrt(2 * rho * A)) # Coefficient k calculation
 
 def dE_dt(t, y):
     """Energy depletion ODE with proper array handling"""
@@ -192,3 +191,4 @@ print(f"\n{'='*50}")
 print("SIMULATION COMPLETE")
 
 print(f"{'='*50}\n")
+
