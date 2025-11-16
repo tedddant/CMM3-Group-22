@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov  5 11:11:57 2025
+Created on Wed Oct  1 11:11:57 2025
 
 @author: teddant
 """
@@ -17,7 +17,7 @@ from scipy.interpolate import interp1d, UnivariateSpline
 plt.ion()
 
 def load_data (csv_files=None, csv_directory=None):
-    # Get CSV files
+    # Load CSV files
     if csv_files is None and csv_directory is None:
         csv_directory = '.'  # Current directory if nothing specified
     
@@ -48,9 +48,8 @@ def load_data (csv_files=None, csv_directory=None):
             print(f"Error processing {csv_file}: {e}")
     return dataframes
 
+# call load_data to load all CSV files in the specified directory
 slowflyer = load_data(csv_directory='database/slowflyer/')
-print(type(slowflyer))
-print(slowflyer['df_11X7'].head()) #check to see if a dataframe is accessible and is formatted correctly
 
 def plot_all(data_dict, title_suffix="", regression_results=None, show_lines=True):
    
@@ -70,8 +69,9 @@ def plot_all(data_dict, title_suffix="", regression_results=None, show_lines=Tru
     # Create figure with two subplots
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
     
-    # Define colors for different propellers
-    colors = plt.cm.tab10(np.linspace(0, 1, len(data_dict)))
+    # Define colors for different propellers — use tab20 to get at least 11 distinct colors
+    cmap = plt.cm.get_cmap('tab20')
+    colors = cmap(np.linspace(0, 1, len(data_dict)))
     
     # Plot each DataFrame
     for i, (df_name, df) in enumerate(data_dict.items()):
@@ -331,25 +331,25 @@ def _format_polynomial(coeffs, var_name='x'):
 # executing the plotting:
 
 # Plot original data
-print("\n=== Plotting Original Data ===")
+print("\n Plotting Original Dat")
 plot_all(slowflyer, "(Original Data)")
 
 # Create interpolated dataframes
-print("\n=== Creating Interpolated Data ===")
+print("\n Creating Interpolated Data")
 interpolated_dict = create_interpolated_dataframes(slowflyer)
 
 # Plot interpolated data
-print("\n=== Plotting Interpolated Data ===")
+print("\n Plotting Interpolated Data")
 plot_all(interpolated_dict, "(Interpolated Data)")
 
 # Perform polynomial regression on original data
-print("\n=== Performing Polynomial Regression ===")
+print("\n Performing Polynomial Regression")
 regression_results = perform_regression(slowflyer, poly_degree=2)
 
 # Plot original data WITH fitted regression lines
-print("\n=== Plotting Original Data with Regression Fits ===")
+print("\n Plotting Original Data with Regression Fits")
 plot_all(slowflyer, "(with Regression Fits)", regression_results=regression_results, show_lines=False)
 
 # Keep plots open and visible
-print("\nPlots displayed! Close the windows to exit.")
+print("\nPlots displayed, Close the windows to exit.")
 plt.show(block=True)
