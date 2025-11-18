@@ -27,7 +27,7 @@ m0 = m_frame + m_payload #The total mass used in the hover equation is m0 +mbatt
 # Placeholder CT/CP values 
 
 def CT(D): return 0.09
-def CP(D): return 0.018
+def CP(D): return 0.014
 
 # Residual: thrust - weight = 0
 #The following code defines the hover condition code as outlined in the report
@@ -120,7 +120,7 @@ plt.grid(True)
 
 # Convergence Comparison at D_test
 
-D_test = 0.26
+D_test = 0.25
 n_bis, bis_res = solve_hover_rpm_bisection(D_test, m0, m_batt)
 n_new, new_res = solve_hover_rpm_newton(D_test, m0, m_batt, n0=1000)
 
@@ -135,7 +135,7 @@ plt.grid(True, which="both", linestyle="--", alpha=0.5)
 plt.legend()
 
 # Print Comparison
-print("\nComparison at D = 0.26 m")
+print("\nComparison at D = 0.25 m")
 print("---------------------------------------")
 print(f"Bisection:       {n_bis*60:.3f} RPM ({len(bis_res)} iterations)")
 print(f"Newton–Raphson:  {n_new*60:.3f} RPM ({len(new_res)} iterations)")
