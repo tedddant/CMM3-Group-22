@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""
-SIMPLIFIED DRONE BATTERY OPTIMIZATION - WINDOWS VERSION
-========================================================
-FIX: Increased motor power limits to support 3kg drone frame
-     No file saving - just displays plots
-"""
+
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -299,4 +294,5 @@ print(f"   Batteries larger than {viable_results[-1]['C_mAh']:.0f} mAh are TOO H
 print(f"   They make the drone require more than {P_MAX_SURGE:.0f}W")
 print(f"   That's why flight time drops to ZERO in the graphs!")
 print(f"\n   Power scales as mass^1.5, so weight penalty is severe!")
+
 print(f"{'='*60}\n")
