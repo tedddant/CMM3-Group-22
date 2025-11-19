@@ -25,12 +25,14 @@ The results are used to select the optimal propeller diameter for the final dron
 This script performs a dynamic flight simulation for a quadcopter in a steady hover using an Ordinary Differential Equation (ODE) solver. Its primary function is to accurately predict the maximum achievable flight time based on battery and drone parameters. 
 
 Some Key features include:
--Dynamic Simulation: Uses scipy.integrate.solve_ivp to model continuous energy change, providing a smooth, realistic profile over time.
--Safety Termination: Automatically stops the simulation when the battery reaches the defined minimum safe energy level (E_min), ensuring the calculated flight time is safe and achievable.
+- Dynamic Simulation: Uses scipy.integrate.solve_ivp to model continuous energy change, providing a smooth, realistic profile over time.
+- Optimization Sweep: The core of the script performs a sweep across varying battery capacities ($\text{mAh}$) to find the optimal size that maximizes flight endurance.
+- Critical Constraint: It includes a Maximum Surge Power limit, which acts as a hard physical constraint, causing flight time to abruptly drop to zero for excessively heavy (oversized) batteries.
+- Safety Termination: Automatically stops the simulation when the battery reaches the defined minimum safe energy level, ensuring the calculated flight time is safe and achievable.
 
-The script prints a numerical summary and generates a 5 panel figure plot.
+The script prints a numerical summary of the optimal configuration and generates a plot showing the energy-vs-weight trade-off curve
 
-To run momdify the constants in the script (m_battery, C, D, etc.) for your specific drone configuration. It currely uses constraints from the Root Finding system.
+To run momdify the constants in the script (m_battery, C, D, P_MAX_SURGE, etc.) for your specific drone configuration. It currely uses constraints from the Root Finding system.
 
 
 ### Regression and interpolation
