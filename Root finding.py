@@ -7,36 +7,36 @@ import matplotlib.pyplot as plt
 plt.rcParams["figure.autolayout"] = True  
 
 
-# Constants for equation
+## Constants for equation ##
 
 rho = 1.225      # kg/m^3 air density (standard value)
 g = 9.81         # gravity m/s^2
 a = 343.0        # speed of sound (m/s)
-M_tip_max = 0.7  # max tip Mach limit
+M_tip_max = 0.7  # max tip Mach limit - value taken based on real-world data regarding small quadcopters
 eta_tot = 0.88   # drivetrain efficiency 
 # eta_tot converts Pmech at Prop disk to Pelec drawn from battery
 
 
-# Masses
+## Masses ##
 
 m_payload = 1.0   # kg
 m_frame   = 2.0   # kg
 m_batt    = 0.20  # kg
 m0 = m_frame + m_payload #The total mass used in the hover equation is m0 +mbatt
 
-# Placeholder CT/CP values 
+## Placeholder CT/CP values ## 
 
 def CT(D): return 0.09
 def CP(D): return 0.014
 
-# Residual: thrust - weight = 0
+## Residual: thrust - weight = 0 ## 
 #The following code defines the hover condition code as outlined in the report
 def thrust_residual(n, D, m0, m_batt):
     W = g * (m0 + m_batt)
     return 4 * rho * (n**2) * (D**4) * CT(D) - W
 #This is the equation to be solved by NR & Bisection
 
-# Bisection Method
+## Bisection Method ##
 
 def solve_hover_rpm_bisection(D, m0, m_batt, tol=1e-6, max_iter=200):
 #Initial Brackets for RPM    
@@ -63,7 +63,7 @@ def solve_hover_rpm_bisection(D, m0, m_batt, tol=1e-6, max_iter=200):
     return n_mid, residuals
 
 
-# Newton-Raphson Method
+## Newton-Raphson Method ##
 
 def solve_hover_rpm_newton(D, m0, m_batt, n0=2000, tol=1e-6, max_iter=50):
     n = n0 # Initial Guess
@@ -83,14 +83,14 @@ def solve_hover_rpm_newton(D, m0, m_batt, n0=2000, tol=1e-6, max_iter=50):
     return n, residuals
     #Loop ends when tolerance met or max iterations hit
 
-# Hover Power Calculation
+## Hover Power Calculation ##
 
 def hover_power(D, n):
     P_mech_per = rho * (n**3) * (D**5) * CP(D) #Mech P of one Prop
     return 4 * P_mech_per / eta_tot #Electrical power drawn
 
 
-# Power vs Diameter Sweep
+## Power vs Diameter Sweep ##
 
 D_vals = np.linspace(0.22, 0.30, 8)
 P_vals = []
@@ -109,7 +109,7 @@ for D in D_vals:
         P_vals.append(P)
         print(f"{D:.2f}\t{n_bis*60:.2f}\t{P:.2f}")
 
-# Plot Hover Power curve
+## Plot Hover Power curve ##
 plt.figure(figsize=(7,5))
 plt.plot(D_vals, P_vals, marker='o')
 plt.xlabel("Prop Diameter (m)")
@@ -118,13 +118,13 @@ plt.title("Hover Power vs Prop Diameter")
 plt.grid(True)
 
 
-# Convergence Comparison at D_test
+## Convergence Comparison at D_test ##
 
 D_test = 0.25
 n_bis, bis_res = solve_hover_rpm_bisection(D_test, m0, m_batt)
 n_new, new_res = solve_hover_rpm_newton(D_test, m0, m_batt, n0=1000)
 
-# Combined Convergence Plot
+## Combined Convergence Plot ##
 plt.figure(figsize=(8,6))
 plt.semilogy(bis_res, marker='o', label="Bisection Method")
 plt.semilogy(new_res, marker='s', color='darkorange', label="Newton–Raphson Method")
@@ -134,7 +134,7 @@ plt.title(f"Convergence Comparison (D = {D_test} m)")
 plt.grid(True, which="both", linestyle="--", alpha=0.5)
 plt.legend()
 
-# Print Comparison
+## Print Comparison ##
 print("\nComparison at D = 0.25 m")
 print("---------------------------------------")
 print(f"Bisection:       {n_bis*60:.3f} RPM ({len(bis_res)} iterations)")
@@ -142,7 +142,7 @@ print(f"Newton–Raphson:  {n_new*60:.3f} RPM ({len(new_res)} iterations)")
 print(f"Difference:      {abs(n_bis-n_new)/n_bis*100:.5f}%")
 
 
-# Sensitivity Check
+## Sensitivity Check ##
 
 diff_list = []
 print("\nSensitivity Check Across Diameters")
@@ -150,8 +150,8 @@ print("D (m)\tDifference (%)")
 
 for D in D_vals:
     nB, _ = solve_hover_rpm_bisection(D, m0, m_batt)
-    nN, _ = solve_hover_rpm_newton(D, m0, m_batt)
-    diff = abs(nB-nN)/nB * 100
+    nN, _ = solve_hover_rpm_newton(D, m0, m_batt, n0=2000)
+    diff = abs((nB-nN)/nB) * 100
     diff_list.append(diff)
     print(f"{D:.2f}\t{diff:.5f}")
 
@@ -163,7 +163,7 @@ plt.title("Root Method Sensitivity Across Prop Diameters")
 plt.grid(True)
 
 
-# Final show - ALL plots Appear
+## Final show - ALL plots Appear ##
 
 plt.show()
 
