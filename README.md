@@ -20,7 +20,7 @@ Some Key features include:
 
 The script prints a numerical summary and generates a 5 panel figure plot.
 
-To run Momdify the constants in the script (m_battery, C, D, etc.) for your specific drone configuration.
+To run momdify the constants in the script (m_battery, C, D, etc.) for your specific drone configuration. It currely uses constraints from the Root Finding system.
 
 
 ### Regression and interpolation
