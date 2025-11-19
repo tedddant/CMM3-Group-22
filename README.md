@@ -10,11 +10,16 @@ simulates a drone hovering to find optimum propeller diameter and motor speed to
 
 ## Numerical methods:
 ### Root finding
-This script determines the required motor speed (RPM) for the drone to hover by solving the thrust–weight balance equation using numerical root finding. Both the Bisection and Newton–Raphson methods are implemented to ensure accuracy and solver independence. The code outputs:
--A table of hover RPM needed for different propeller diameters and its relevant plot.
--A sensitivity analysis of the two root finding methods and a graphical output.
--A convergence comparison between the two methods and a graphical output.
-The results are used to select the optimal propeller diameter for the final drone design. Values for Ct & Cp where obtained from regression/interpolation and can be modified along with physical variables such as the masses and propeller diamters for which root finding is carried out.
+
+This script determines the required motor speed (RPM) for the drone to hover by solving the thrust–weight balance equation using numerical root finding. Both the Bisection and Newton–Raphson methods are implemented to ensure accuracy and solver independence.
+
+The code outputs:
+- A table of hover RPM needed for different propeller diameters and its relevant plot  
+- A sensitivity analysis of the two root finding methods and a graphical output  
+- A convergence comparison between the two methods and a graphical output  
+
+The results are used to select the optimal propeller diameter for the final drone design. Values for $C_T$ and $C_P$ were obtained from regression/interpolation and can be modified along with physical variables such as the masses and propeller diameters for which root finding is carried out.
+
 
 ### ODEs
 This script performs a dynamic flight simulation for a quadcopter in a steady hover using an Ordinary Differential Equation (ODE) solver. Its primary function is to accurately predict the maximum achievable flight time based on battery and drone parameters. 
