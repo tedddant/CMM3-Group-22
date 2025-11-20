@@ -1,5 +1,5 @@
 # Drone optimisation project
-simulates a drone hovering to find optimum propeller diameter and motor speed to maximise flight time.
+The project aims to simulate and optimise the constraints for a hovering drone. Through numerical methods we try to find which propellers to use and their optimal rotation speed to maximise efficiency. We also optimise the battery capacity to allow for the greatest hover time while maintaining realistic safety constraints.
 
 ## Setup 
 `conda env create -f environment.yml`
@@ -14,9 +14,9 @@ simulates a drone hovering to find optimum propeller diameter and motor speed to
 This script determines the required motor speed (RPM) for the drone to hover by solving the thrust–weight balance equation using numerical root finding. Both the Bisection and Newton–Raphson methods are implemented to ensure accuracy and solver independence.
 
 The code outputs:
-- A table of hover RPM needed for different propeller diameters and its relevant plot  
-- A sensitivity analysis of the two root finding methods and a graphical output  
-- A convergence comparison between the two methods and a graphical output  
+- A table of hover RPM needed for different propeller diameters and its relevant plot.  
+- A sensitivity analysis of the two root finding methods and a graphical output.
+- A convergence comparison between the two methods and a graphical output.
 
 The results are used to select the optimal propeller diameter for the final drone design. Values for $C_T$ and $C_P$ were obtained from regression/interpolation and can be modified along with physical variables such as the masses and propeller diameters for which root finding is carried out.
 
@@ -30,7 +30,7 @@ Some Key features include:
 - Critical Constraint: It includes a Maximum Surge Power limit, which acts as a hard physical constraint, causing flight time to abruptly drop to zero for excessively heavy (oversized) batteries.
 - Safety Termination: Automatically stops the simulation when the battery reaches the defined minimum safe energy level, ensuring the calculated flight time is safe and achievable.
 
-The script prints a numerical summary of the optimal configuration and generates a plot showing the energy-vs-weight trade-off curve
+The script prints a numerical summary of the optimal configuration and generates a plot showing the energy-vs-weight trade-off curve.
 
 To run momdify the constants in the script (m_battery, C, D, P_MAX_SURGE, etc.) for your specific drone configuration. It currely uses constraints from the Root Finding system.
 
